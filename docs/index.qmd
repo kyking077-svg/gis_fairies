@@ -8,7 +8,7 @@ authors:
     corresponding: true
 df-print: kable
 bibliography: GIS_Manuscript.bib
-title-block-banner: "#25a20e95"
+title-block-banner: "#195b0eff"
 title-block-banner-color: "black"
 format:
   html:
@@ -40,8 +40,11 @@ In his 1920 article, "The Early Irish Fairies and Fairyland," Norreys Jephson O'
 The Aes Sídhe, more commonly known as the Fair Folk or other monikers (to avoid their ire) are still involved in the lives of mankind. A collection of poems by various writers and historians describes these encounters with fairies, which are often within forests:
 
 > *“Come away, O, human child!*
+>
 > *To the woods and waters wild,*
+>
 > *With a fairy hand in hand,*
+>
 > *For the world’s more full of weeping than you can understand.”*
 >  
 > *- W.B. Yeats, Fairy and Folk Tales of the Irish Peasantry*
@@ -49,11 +52,14 @@ The Aes Sídhe, more commonly known as the Fair Folk or other monikers (to avoid
 -------
 
 > *We the Fairies, blithe and antic,*
+>
 > *Of dimensions not gigantic,*
+>
 > *Though the moonshine mostly keep us,*
+>
 > *Oft in orchards frisk and peep us.*
 > 
-> *- Thomas Randolph*
+> *- Leigh Hunt*
 
 -------
 
@@ -61,9 +67,14 @@ The Aes Sídhe, more commonly known as the Fair Folk or other monikers (to avoid
 > 
 > *- Robert Louis Stevenson, Essays in The Art of Writing*
 
+-------
+
 > *The wall is silence, the grass is sleep,*
+>
 > *Tall trees of peace their vigil keep,*
+>
 > *And the Fairy of Dreams with moth-wings furled*
+>
 > *Plays soft on her flute to the drowsy world.*
 > 
 > *- Ida Rentoul Outhwaite*
@@ -75,8 +86,11 @@ Because of these frequent depictions, we begin our study with the assumption tha
 The Fair Folk often travel between this realm and their own, which is known as Tir n-an Og. Stone circles, which are found throughout Ireland, are said to be portals to the fairy realm, and are treated with heavy superstition. Visiting the fairy realm comes at a cost, but the beauty of it is said to be unmatched. *The Voyage of Bren,* translated by O'Conor, includes a poem that briefly describes the beauty of the fairy realm: [@Oconor] 
 
 > *"A beauty of a wondrous land,*
+>
 > *Whose aspects are lovely,*
+>
 > *Whose view is a far country,*
+>
 > *Incomparable is its haze.*
 
 ![Stone circle depiction, from IrishArchaeology.org](photos/stonecircle.jpeg)
@@ -98,14 +112,12 @@ Hypothesis 3: Stone circles were built in a certain habitat, reflecting the natu
 # Methodology
 To test our hypotheses, the locations of fairy barrows will be compared to land cover data from 1990 to determine whether fairies prefer a certain habitat (first-order clustering). To test whether fairies cluster near stone circles (second-order clustering), rather than a particular habitat, we will compare the average distance of fairy barrows to nearby stone circles. The preferred habitat for stone circle construction will also be tested with the same land cover data, as we have very little information about fairy habits. If any preferred habitats are found, land cover data from 2018 will be compared to the 1990 dataset to produce a change matrix, and identify whether fairy habitat in the Repulic of Ireland remains intact. 
 
-## Point Data Preparation
 This study was conducted using R, with the packages tidyverse, sf, mapview, spatstat, stars, rnaturalearth, terra, tidyterra, and pbapply.
 
-The Coordinate Reference System (CRS) for this study is the Irish Transverse Mercator (ITM) projection, with EPSG code 2157. All data is reprojected or transformed into this CRS for calculations and visualizations. (cite)
+The Coordinate Reference System (CRS) for this study is the Irish Transverse Mercator (ITM) projection, with EPSG code 2157. All data is reprojected or transformed into this CRS for calculations and visualizations.
 
-The 'barrows' and 'stone circles' point data were both downloaded from IrishArchaeology.org.(cite) This website hosts downloadable kml webmaps for archeaological sites all across Ireland. Unfortunately, the website's author, Eamonn, traded his last name to the Fair Folk, so is unidentifiable beyond the website. However, his great sacrifice is the reason the point data remains accessible and uncorrupted. More notes on the raw data can be found in the Appendix(link). The data is displayed on the interactive viewer below.
-
-
+## Point Data Preparation
+The 'barrows' and 'stone circles' point data were both downloaded from IrishArchaeology.org. [@Eamonn_2025] This website hosts downloadable kml webmaps for archeaological sites all across Ireland. Unfortunately, the website's author, Eamonn, traded his last name to the Fair Folk, so is unidentifiable beyond the website. However, his great sacrifice is the reason the point data remains accessible and uncorrupted. More notes on the raw data can be found in the Appendix. The data is displayed on the interactive viewer below.
 
 ```{r}
 library(tidyverse) |> suppressPackageStartupMessages()
@@ -149,7 +161,7 @@ fairies_map
 
 ```
 
-The observation window for this study is the Natural Earth Data Republic of Ireland sf object at 1:10m resolution. All calculations are constrained to the bounds of this polygon. (cite) The point data was loaded from CSV format to planar point pattern format within this polygon, as displayed below. These point patterns will later be used to perform fairy barrow density calculations and stone circle distance calculations in the hypothesis testing phase.
+The observation window for this study is the Natural Earth Data Republic of Ireland sf object at 1:10m resolution. All calculations are constrained to the bounds of this polygon. (Made with Natural Earth) The point data was loaded from CSV format to planar point pattern format within this polygon, as displayed below. These point patterns will later be used to perform fairy barrow density calculations and stone circle distance calculations in the hypothesis testing phase.
 
 ```{r}
 #ireland observation window
@@ -181,7 +193,7 @@ stone_circles_ppp |> sf::st_as_sf() |> ggplot() +
 
 ## Land Cover Data Preparation
 
-Land cover data from 1990 and 2018 was collected from the EU Copernicus component of the European Union's space program. It is produced by the Coordination of Information on the Environment (CORINE) program, which provides a uniform, continent-wide land cover inventory with 44 thematic classes called the CORINE Land Cover product. (cite a few things) Full metadata of the 44 classes and their associated reclassification can be found in the Appendix(link?).
+Land cover data from 1990 and 2018 was collected from the EU Copernicus component of the European Union's space program. It is produced by the Coordination of Information on the Environment (CORINE) program, which provides a uniform, continent-wide land cover inventory with 44 thematic classes called the CORINE Land Cover product. [@CORINE1990,] [@CORINe2018] Full metadata of the 44 classes and their associated reclassification can be found in the Appendix.
 
 ```{r}
 #| label: reading in the rasters againnnn
@@ -371,3 +383,96 @@ From the above table, we see that the Republic of Ireland saw a 12.3% increase i
 
 # Conclusion
 Much to the author's relief, this concluses the initial investigation of fairy habitats in the Republic of Ireland. This study provides evidence that, despite popular belief, Irish fairies prefer to live in agricultural areas, rather than the oft-depicted forests. In addition, fairies prefer to live near stone circles, possibly to easily travel to them, or as a result of their initial dispersal to the human realm via the portals. Finally, we found that stone circles are disproportionately often constructed in grasslands and shrublands. Upon investigation of land cover change, we found that the Republic of Ireland has maintained and increased the total amount of available grasslands for possible stone circle construction, but that half of the grasslands since 1990 have transitioned to other land cover types. We recommend immediate research into the effects of this loss, and whether any major fairy circles were disturbed between 1990 and 2018. We also recommend behavioral studies on the preference for agricultural dwellings, and propose research into the hunting habits of Irish fairies as an explanation for their frequent sightings in forested areas. Finally, we offer advice to future researchers: Offerings of honey, flowers, and interesting buttons may sate the fairies long enough to complete your studies.
+
+# Appendix
+
+## Barrows Data
+Data collected from Irish Archaeology website, downloaded in kml format from the associated Interactive Google Map, and converted to CSV. The CSV was also cleaned in Microsoft Excel to retain all downloaded information in a usable format for the sf library.
+
+https://irisharchaeology.org/maps/
+
+Data Dictionary for Barrows (cleaned)
+
+| Column Name | Description | Type | Example |
+|--------------|-------------|------|----------|
+| townland     | Smallest land division in Ireland, of which there are ~60,000 | string | BALLINCOLLIG |
+| county      | Administrative division of Ireland, of which there are 32 | string | KERRY |
+| smrs      | Official Sites and Monuments Records, unique identifying number for archaeological monuments and places in Ireland, made up of letters, numbers, and dashes @archaeology.ie_2996 | string | KE030-080---- |
+| entity_id | Informal identifier for the associated site, with letters and numbers | string | KE14708 |
+| objectid    | Numeric identifier for sites in the Irish Archaeology database | numeric | 68203 |
+| class_code      | Consise code associated with the monument_type | string | BOBA, DTBA, EMBR, MOBR, POBA, RGBA, STBA, or BARO |
+| monument_type      | Classification of barrow | string | bowl barrow, ditch barrow, embanked barrow, mound barrow, pond barrow, ring-barrow, stepped barrow, or unclassified barrow |
+| latitude      | Latitude coordinate of the site, in Decimal Degrees | numeric | 52.299461 |
+| longitude      | Longitude coordinate of the site, in Decimal Degrees | numeric | -9.616146 |
+| web_notes      | Detailed notes on the site, as written when the dataset was created  | string | Monument surveyed in 2015 and described by McGuinness (2015, 34) as following: |
+
+
+https://www.archaeology.ie/app/uploads/2025/03/Archaeology-RMP-Kilkenny-Manual-1996-0022.pdf
+havent figured out how to link my bib here 
+
+Data Dictionary for Stone Circles (cleaned) (not done yet)
+
+| Column Name | Description | Type | Example |
+|--------------|-------------|------|----------|
+| townland     | Smallest land division in Ireland, of which there are ~60,000 | string | BALLINCOLLIG |
+| county      | Administrative division of Ireland, of which there are 32 | string | KERRY |
+| smrs      | Official Sites and Monuments Records, unique identifying number for archaeological monuments and places in Ireland, made up of letters, numbers, and dashes @archaeology.ie_2996 | string | KE030-080---- |
+| entity_id | Informal identifier for the associated site, with letters and numbers | string | KE14708 |
+| objectid    | Numeric identifier for sites in the Irish Archaeology database | numeric | 68203 |
+| class_code      | Consise code associated with the monument_type | string | BOBA, DTBA, EMBR, MOBR, POBA, RGBA, STBA, or BARO |
+| monument_type      | Classification of barrow | string | bowl barrow, ditch barrow, embanked barrow, mound barrow, pond barrow, ring-barrow, stepped barrow, or unclassified barrow |
+| latitude      | Latitude coordinate of the site, in Decimal Degrees | numeric | 52.299461 |
+| longitude      | Longitude coordinate of the site, in Decimal Degrees | numeric | -9.616146 |
+| web_notes      | Detailed notes on the site, as written when the dataset was created  | string | Monument surveyed in 2015 and described by McGuinness (2015, 34) as following: |
+
+Note for land cover: 1990 data is called U2000_CLC1990_V2020_20u1 inside U2000_CLC1990_V2020_20u1.gdb, and 2018 is called  U2018_CLC2018_V2020_20u1 inside U2018_CLC2018_V2020_20u1.gdb
+
+## Land Cover Data
+Land Cover Data Classification and Reclassification
+
+| Cell Value | CLC Code | Full Land Cover Category | New Land Cover Category | New Cell Value |
+|--------------|-------------|------|----------|------|
+|1	| 111	|	Artificial surfaces-Urban fabric-Continuous urban fabric | Dense Human Zones | 1 |
+|2	| 112	|	Artificial surfaces-Urban fabric-Discontinuous urban fabric | Dense Human Zones | 1 |
+|3	| 121	|	Artificial surfaces-Industrial, commercial and transport units-Industrial or commercial units | Dense Human Zones | 1 |
+|4	| 122	|	Artificial surfaces-Industrial, commercial and transport units-Road and rail networks and associated land | Dense Human Zones | 1 |
+|5	| 123	|	Artificial surfaces-Industrial, commercial and transport units-Port areas | Dense Human Zones | 1 |
+|6	| 124	|	Artificial surfaces-Industrial, commercial and transport units-Airports | Dense Human Zones | 1 |
+|7	| 131	|	Artificial surfaces-Mine, dump and construction sites-Mineral extraction sites | Dense Human Zones | 1 |
+|8	| 132	|	Artificial surfaces-Mine, dump and construction sites-Dump sites | Dense Human Zones | 1 |
+|9	| 133	|	Artificial surfaces-Mine, dump and construction sites-Construction sites | Dense Human Zones | 1 |
+|10	| 141	|	Artificial surfaces-Artificial, non-agricultural vegetated areas-Green urban areas | Dense Human Zones | 1 |
+|11	| 142	|	Artificial surfaces-Artificial, non-agricultural vegetated areas-Sport and leisure facilities | Dense Human Zones | 1 |
+|12	| 211	|	Agricultural areas-Arable land-Non-irrigated arable land | Human Agriculture | 2 |
+|13	| 212	|	Agricultural areas-Arable land-Permanently irrigated land | Human Agriculture | 2 |
+|14	| 213	|	Agricultural areas-Arable land-Rice fields | Human Agriculture | 2 |
+|15	| 221	|	Agricultural areas-Permanent crops-Vineyards | Human Agriculture | 2 |
+|16	| 222	|	Agricultural areas-Permanent crops-Fruit trees and berry plantations | Human Agriculture | 2 |
+|17	| 223	|	Agricultural areas-Permanent crops-Olive groves | Human Agriculture | 2 |
+|18	| 231	|	Agricultural areas-Pastures-Pastures | Human Agriculture | 2 |
+|19	| 241	|	Agricultural areas-Heterogeneous agricultural areas-Annual crops associated with permanent crops | Human Agriculture | 2 |
+|20	| 242	|	Agricultural areas-Heterogeneous agricultural areas-Complex cultivation patterns | Human Agriculture | 2 |
+|21	| 243	|	Agricultural areas-Heterogeneous agricultural areas-Land principally occupied by agriculture, with significant areas of natural vegetation | Human Agriculture | 2 |
+|22	| 244	|	Agricultural areas-Heterogeneous agricultural areas-Agro-forestry areas | Human Agriculture | 2 |
+|23	| 311	|	Forest and semi natural areas-Forests-Broad-leaved forest | Forests | 3 |
+|24	| 312	|	Forest and semi natural areas-Forests-Coniferous forest | Forests | 3 |
+|25	| 313	|	Forest and semi natural areas-Forests-Mixed forest | Forests | 3 |
+|26	| 321	|	Forest and semi natural areas-Scrub and/or herbaceous vegetation associations-Natural grasslands | Grass and Shrublands | 4 |
+|27	| 322	|	Forest and semi natural areas-Scrub and/or herbaceous vegetation associations-Moors and heathland | Grass and Shrublands | 4 |
+|28	| 323	|	Forest and semi natural areas-Scrub and/or herbaceous vegetation associations-Sclerophyllous vegetation | Forests | 3 |
+|29	| 324	|	Forest and semi natural areas-Scrub and/or herbaceous vegetation associations-Transitional woodland-shrub | Forests | 3 |
+|30	| 331	|	Forest and semi natural areas-Open spaces with little or no vegetation-Beaches, dunes, sands | Rocky, Barren, or Snowy | 5 |
+|31	| 332	|	Forest and semi natural areas-Open spaces with little or no vegetation-Bare rocks | Rocky, Barren, or Snowy | 5 |
+|32	| 333	|	Forest and semi natural areas-Open spaces with little or no vegetation-Sparsely vegetated areas | Rocky, Barren, or Snowy | 5 |
+|33	| 334	|	Forest and semi natural areas-Open spaces with little or no vegetation-Burnt areas | Rocky, Barren, or Snowy | 5 |
+|34	| 335	|	Forest and semi natural areas-Open spaces with little or no vegetation-Glaciers and perpetual snow | Rocky, Barren, or Snowy | 5 |
+|35	| 411	|	Wetlands-Inland wetlands-Inland marshes | Wetlands | 6 |
+|36	| 412	|	Wetlands-Inland wetlands-Peat bogs | Wetlands | 6 |
+|37	| 421	|	Wetlands-Maritime wetlands-Salt marshes | Wetlands | 6 |
+|38	| 422	|	Wetlands-Maritime wetlands-Salines | Wetlands | 6 |
+|39	| 423	|	Wetlands-Maritime wetlands-Intertidal flats | Wetlands | 6 |
+|40	| 511	|	Water bodies-Inland waters-Water courses | Water Bodies | 7 |
+|41	| 512	|	Water bodies-Inland waters-Water bodies | Water Bodies | 7 |
+|42	| 521	|	Water bodies-Marine waters-Coastal lagoons | Water Bodies | 7 |
+|43	| 522	|	Water bodies-Marine waters-Estuaries | Water Bodies | 7 |
+|44	| 523	|	Water bodies-Marine waters-Sea and ocean | Water Bodies | 7 |
