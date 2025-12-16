@@ -1,5 +1,5 @@
 ---
-title: "what if i change this one"
+title: "Finding the Fair Folk"
 subtitle: "DSAN 6750 / PPOL 6805: GIS for Spatial Data Science"
 authors:
   - name: Jeff Jacobs
